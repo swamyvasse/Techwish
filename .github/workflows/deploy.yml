@@ -38,8 +38,8 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.18.212.96.6}} "
-            cd ${{ secrets.APP_DIRECTORY }} &&
+          ssh -o StrictHostKeyChecking=no ${{ secrets.ubuntu }}@${{ secrets.18.212.96.6}} "
+            cd ${{ secrets.myapp }} &&
             git pull origin main &&
             npm install --production &&
             pm2 restart your-app-name  # Use PM2 or your preferred process manager
