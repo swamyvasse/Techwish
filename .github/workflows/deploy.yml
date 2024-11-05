@@ -1,0 +1,45 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Change as per your Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build application
+        run: npm run build  # Modify if you have a build script
+
+      - name: Copy files to server
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+         QyNTUxOQAAACDY13XXDz20w4643pGNcHAvnsUpnvTuj5rLo1DhrlrmlQAAAJDoBRMQ6AUT
+         EAAAAAtzc2gtZWQyNTUxOQAAACDY13XXDz20w4643pGNcHAvnsUpnvTuj5rLo1DhrlrmlQ
+         AAAEAgwh+j/+MUCwCleBiA+tot8AimnzNIeLnQpRC35pk3mdjXddcPPbTDjrjekY1wcC+e
+         xSme9O6PmsujUOGuWuaVAAAAC3Zzd2FtQFN3YW15AQI=
+         -----END OPENSSH PRIVATE KEY-----
+        }}
+
+      - name: Deploy to server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.18.212.96.6 }} "
+            cd ${{ secrets.APP_DIRECTORY }} &&
+            git pull origin main &&
+            npm install --production &&
+            pm2 restart your-app-name  # Use PM2 or your preferred process manager
+          "
